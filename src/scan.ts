@@ -48,7 +48,12 @@ export function getRecentCommits(repoPath: string, since: string): string[] {
   }
 }
 
-export function scanRecentActivity(parentDir: string, since = "7 days ago"): RepoCommits[] {
+export const LOOKBACK_DAYS = 3;
+
+export function scanRecentActivity(
+  parentDir: string,
+  since = `${LOOKBACK_DAYS} days ago`,
+): RepoCommits[] {
   return findRepos(parentDir)
     .map((path) => ({
       repo: path.split("/").pop() ?? path,

@@ -1,13 +1,13 @@
 # parrot
 
-A CLI that looks at the last 7 days of commits across your local repos and
+A CLI that looks at the last 3 days of commits across your local repos and
 turns them into tweet-sized post drafts.
 
 ## What it does
 
 1. Scans a parent folder for git repositories.
-2. For each repo, pulls the commits from the last 7 days.
-3. Sends the commit log to Claude (`claude-opus-5`) and gets back 5 tweet-sized
+2. For each repo, pulls the commits from the last 3 days.
+3. Sends the commit log to Claude (`claude-haiku-4-5`) and gets back 5 tweet-sized
    (under 280 characters) draft posts — research/tech-flavored, with concrete
    numbers when the commit log supports them.
 

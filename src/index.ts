@@ -1,6 +1,6 @@
 import "dotenv/config";
 import { Command } from "commander";
-import { scanRecentActivity } from "./scan.js";
+import { scanRecentActivity, LOOKBACK_DAYS } from "./scan.js";
 import { generateTweets } from "./summarize.js";
 import { startSpinner } from "./spinner.js";
 import { parrotBanner } from "./parrot.js";
@@ -28,11 +28,11 @@ console.log(parrotBanner());
 const activity = scanRecentActivity(parentDir);
 
 if (activity.length === 0) {
-  console.log(`No commits from the last 7 days found under ${parentDir}`);
+  console.log(`No commits from the last ${LOOKBACK_DAYS} days found under ${parentDir}`);
 } else {
   const totalCommits = activity.reduce((sum, { commits }) => sum + commits.length, 0);
   console.log(
-    `${DIM}Reading ${activity.length} repos, ${totalCommits} commits from the last 7 days:${RESET}`,
+    `${DIM}Reading ${activity.length} repos, ${totalCommits} commits from the last ${LOOKBACK_DAYS} days:${RESET}`,
   );
   for (const { repo, commits } of activity) {
     console.log(`  ${BOLD}${repo}${RESET} ${DIM}(${commits.length} commits)${RESET}`);

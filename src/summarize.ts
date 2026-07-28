@@ -1,5 +1,5 @@
 import Anthropic from "@anthropic-ai/sdk";
-import type { RepoCommits } from "./scan.js";
+import { LOOKBACK_DAYS, type RepoCommits } from "./scan.js";
 
 const client = new Anthropic();
 
@@ -24,14 +24,13 @@ export async function generateTweets(
     .join("\n\n");
 
   const instruction = styleGuide
-    ? `Here is a style guide. Follow it as the primary instruction for voice and for what to post about — it overrides any default assumptions about tone or framing:\n\n${styleGuide}\n\nHere is git commit history from the last 7 days across several repos, including each commit's full message and diffstat (files changed, insertions/deletions). Use it only as raw material for claims — every post must be grounded in something the log actually shows, but do not narrate the work ("shipped X", "built Y this week"). Extract the underlying claim or observation instead, in the voice above:\n\n${commitLog}\n\nWrite 5 tweet-sized (under 280 characters) posts. No hashtags, no emoji, no quotation marks around the tweet.`
-    : `Here is git commit history from the last 7 days across several repos, including each commit's full message and diffstat (files changed, insertions/deletions):\n\n${commitLog}\n\nWrite 5 tweet-sized (under 280 characters) posts for a tech/research-oriented X audience, inspired by this work. Prefer concrete numbers (counts, sizes, percentages) when the log supports them; otherwise write a punchy technical or research-flavored observation. No hashtags, no emoji, no quotation marks around the tweet.`;
+    ? `Here is a style guide. Follow it as the primary instruction for voice and for what to post about — it overrides any default assumptions about tone or framing:\n\n${styleGuide}\n\nHere is git commit history from the last ${LOOKBACK_DAYS} days across several repos, including each commit's full message and diffstat (files changed, insertions/deletions). Use it only as raw material for claims — every post must be grounded in something the log actually shows, but do not narrate the work ("shipped X", "built Y this week"). Extract the underlying claim or observation instead, in the voice above:\n\n${commitLog}\n\nWrite 5 tweet-sized (under 280 characters) posts. No hashtags, no emoji, no quotation marks around the tweet.`
+    : `Here is git commit history from the last ${LOOKBACK_DAYS} days across several repos, including each commit's full message and diffstat (files changed, insertions/deletions):\n\n${commitLog}\n\nWrite 5 tweet-sized (under 280 characters) posts for a tech/research-oriented X audience, inspired by this work. Prefer concrete numbers (counts, sizes, percentages) when the log supports them; otherwise write a punchy technical or research-flavored observation. No hashtags, no emoji, no quotation marks around the tweet.`;
 
   const response = await client.messages.create({
-    model: "claude-opus-5",
+    model: "claude-haiku-4-5",
     max_tokens: 2048,
     output_config: {
-      effort: "medium",
       format: { type: "json_schema", schema: TWEET_SCHEMA },
     },
     messages: [{ role: "user", content: instruction }],
