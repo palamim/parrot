@@ -1,0 +1,36 @@
+{
+  "name": "parrot",
+  "version": "0.1.0",
+  "description": "",
+  "main": "dist/index.js",
+  "type": "module",
+  "bin": {
+    "parrot": "dist/index.js"
+  },
+  "scripts": {
+    "dev": "tsx src/index.ts",
+    "build": "tsc",
+    "start": "node dist/index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/palamim/parrot.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/palamim/parrot/issues"
+  },
+  "homepage": "https://github.com/palamim/parrot#readme",
+  "devDependencies": {
+    "@types/node": "^26.1.2",
+    "tsx": "^4.23.1",
+    "typescript": "^7.0.2"
+  },
+  "dependencies": {
+    "@anthropic-ai/sdk": "^0.115.0",
+    "commander": "^15.0.0",
+    "dotenv": "^17.4.2"
+  }
+}
