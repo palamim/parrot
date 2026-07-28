@@ -9,7 +9,7 @@ const DIM = "\x1b[2m";
 const GREEN = "\x1b[32m";
 const RESET = "\x1b[0m";
 
-const parentDir = process.argv[2] ?? process.cwd();
+const parentDir = process.argv[2] ?? process.env.PROJECTS_ROOT ?? process.cwd();
 
 console.log(parrotBanner());
 
