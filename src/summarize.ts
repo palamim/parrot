@@ -17,7 +17,7 @@ const TWEET_SCHEMA = {
 
 export async function generateTweets(activity: RepoCommits[]): Promise<string[]> {
   const commitLog = activity
-    .map(({ repo, commits }) => `## ${repo}\n${commits.join("\n")}`)
+    .map(({ repo, commits }) => `## ${repo}\n${commits.join("\n\n")}`)
     .join("\n\n");
 
   const response = await client.messages.create({
@@ -30,7 +30,7 @@ export async function generateTweets(activity: RepoCommits[]): Promise<string[]>
     messages: [
       {
         role: "user",
-        content: `Here is a git commit log from the last 7 days across several repos:\n\n${commitLog}\n\nWrite 5 tweet-sized (under 280 characters) posts for a tech/research-oriented X audience, inspired by this work. Prefer concrete numbers (counts, sizes, percentages) when the log supports them; otherwise write a punchy technical or research-flavored observation. No hashtags, no emoji, no quotation marks around the tweet.`,
+        content: `Here is git commit history from the last 7 days across several repos, including each commit's full message and diffstat (files changed, insertions/deletions):\n\n${commitLog}\n\nWrite 5 tweet-sized (under 280 characters) posts for a tech/research-oriented X audience, inspired by this work. Prefer concrete numbers (counts, sizes, percentages) when the log supports them; otherwise write a punchy technical or research-flavored observation. No hashtags, no emoji, no quotation marks around the tweet.`,
       },
     ],
   });

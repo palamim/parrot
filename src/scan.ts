@@ -24,14 +24,25 @@ export function findRepos(parentDir: string): string[] {
     });
 }
 
+const RECORD_SEP = "\x1e";
+
 export function getRecentCommits(repoPath: string, since: string): string[] {
   try {
     const out = execFileSync(
       "git",
-      ["log", `--since=${since}`, "--pretty=format:%h %ad %s", "--date=short"],
+      [
+        "log",
+        `--since=${since}`,
+        "--date=short",
+        "--stat",
+        `--pretty=format:${RECORD_SEP}%h %ad %s%n%b`,
+      ],
       { cwd: repoPath, encoding: "utf-8" },
     );
-    return out.split("\n").filter(Boolean);
+    return out
+      .split(RECORD_SEP)
+      .map((block) => block.trim())
+      .filter(Boolean);
   } catch {
     return [];
   }
