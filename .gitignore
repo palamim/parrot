@@ -7,4 +7,6 @@ coverage/
 .env
 .env.*
 !.env.example
+parrot.style.md
+!parrot.style.example.md
 .DS_Store

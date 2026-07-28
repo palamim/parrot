@@ -36,3 +36,25 @@ If no path is given, it falls back to `PROJECTS_ROOT` from `.env`, and if
 that isn't set either, it scans the current directory.
 
 Output is the raw commit list per repo, followed by the tweet drafts.
+
+## Style guide
+
+By default, parrot writes in a generic tech/research voice. To match your
+own voice — tone, and what kinds of claims or topics to favor — copy
+`parrot.style.example.md` to `parrot.style.md` and rewrite it as freeform
+text describing (or giving examples of) the voice you want. There's no
+required structure or persona baked in; write it however makes sense to you,
+whether that's a few bullet points or a handful of example posts.
+
+```bash
+cp parrot.style.example.md parrot.style.md
+# then edit parrot.style.md
+```
+
+parrot looks for `./parrot.style.md` automatically. To use a different
+location, set `PARROT_STYLE_FILE` in `.env` or pass `--style <path>` on the
+command line:
+
+```bash
+npm run dev -- /path/to/your/projects/folder --style ~/notes/my-voice.md
+```
