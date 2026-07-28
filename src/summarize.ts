@@ -20,7 +20,7 @@ const TWEET_SCHEMA = {
 // step maintains from user feedback (see curator.ts). Don't fold voice
 // opinions in here, even ones that seem universal — someone else's taste
 // may disagree, and this is the one place that can't hear feedback.
-const MECHANICS_INSTRUCTION = `Write 5 tweet-sized (under 280 characters) posts. No hashtags, no emoji, no quotation marks around the tweet. Every post must be grounded in something the commit log actually shows — don't invent details it doesn't support.`;
+const MECHANICS_INSTRUCTION = `Write 5 tweet-sized (under 280 characters, prefix included) posts. No hashtags, no emoji, no quotation marks around the tweet. Every post must be grounded in something the commit log actually shows — don't invent details it doesn't support. Start each tweet with the name of the repo it's about, formatted as "reponame: ", using the repo names exactly as given in the commit log headers.`;
 
 // Bootstrap voice — a starting opinion, not a rule. Used only until the
 // curator has produced a real style guide from feedback (see curator.ts /
